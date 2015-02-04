@@ -1,7 +1,5 @@
 # Electronic_Thermodynamics
-Calculate Thermodynamic and thermoelastic quantities form electronic contribution to the total free energy of a solid. 
-
-Calculated quantities:
+Calculate Thermodynamic and thermoelastic quantities form electronic contribution to the total free energy of a metal. Quantities computed:
 
   1 - Internal Energy (V,T)
 
