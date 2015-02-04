@@ -1,4 +1,7 @@
 # Electronic_Thermodynamics
+# Author: Daniele Dragoni
+# Affiliation: THEOS & MARVEL, EPFL
+# Date: 04/02/2015
 Calculate Thermodynamic and thermoelastic quantities form electronic contribution to the total free energy of a metal. Quantities computed:
 
   1 - Internal Energy (V,T)
