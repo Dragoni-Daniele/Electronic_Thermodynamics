@@ -7,6 +7,7 @@ BtoAA    = 0.529177249
 eVtoRy   = 0.073498618
 RyAtoGPa = 4.5874e-4
 
+import numpy as np
 data=np.genfromtxt("/home/dragoni/daint.rsync/data/dragoni/test/EOS_tight/Edef.dat")
 
 x_training=data[:,2]*(BtoAA**3)
