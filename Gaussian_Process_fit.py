@@ -11,7 +11,7 @@ import numpy as np
 data=np.genfromtxt("/home/dragoni/daint.rsync/data/dragoni/test/EOS_tight/Edef.dat")
 
 x_training=data[:,2]*(BtoAA**3)
-t_training=data[:,3]
+t_training=data[:,3]-min(data[:,3])
 x_prediction=np.linspace(10.6,12.1,101)   # test set
 
 print "Define correlation length, hight and error of training set"
