@@ -60,12 +60,14 @@ def  GP_fit(x_prediction,x_training,t_training,Theta,Lambda,Sigma):
    ################################################################################################################
    ################################################################################################################
    
-   degpoly=2            # QUadratic fit to start with
-   pol=np.polyfit(x_training,t_training,degpoly)
-   polder1=np.polyder(pol,1) 
-   polder2=np.polyder(pol,2) 
-   poly_func=np.poly1d(pol)
-   t_training=t_training-poly_func(x_training)
+   degpoly        = 2                   # QUadratic fit to start with
+   pol            = np.polyfit(x_training,t_training,degpoly)
+   polder1        = np.polyder(pol,1) 
+   polder2        = np.polyder(pol,2) 
+   poly_func      = np.poly1d(pol)
+   poly_func_der1 = np.poly1d(polder1)
+   poly_func_der2 = np.poly1d(polder2)
+   t_training     = t_training-poly_func(x_training)
    ############ LOAD COVARIANCE MATRICES ##########################################################################
    ################################################################################################################
    Kov_train_train           =np.zeros((x_training.size,x_training.size))
@@ -136,5 +138,13 @@ def  GP_fit(x_prediction,x_training,t_training,Theta,Lambda,Sigma):
    ################################################################################################################
    ################################################################################################################
 
+   # Reconstruct the optimized function
+   posterior_mean            = posterior_mean+poly_func(x_predict)
+   posterior_mean_der1       = posterior_mean_der1+poly_func_der1(x_predict)
+   posterior_mean_der2       = posterior_mean_der2+poly_func_der2(x_predict)
+   posterior_mean_noisy      = posterior_mean+poly_func(x_predict)
+   posterior_mean_der1_noisy = posterior_mean_der1+poly_func_der1(x_predict)
+   posterior_mean_der2_noisy = posterior_mean_der2+poly_func_der2(x_predict)
+   
    print 'Execution time: ',(datetime.now()-startTime)
-   return posterior_mean,posterior_mean_der1,posterior_mean_der2, posterior_mean_noisy,posterior_mean_der1_noisy,posterior_mean_der2_noisy
+   return posterior_mean,posterior_mean_der1,posterior_mean_der2, posterior_mean_noisy,posterior_mean_der1_noisy,,posterior_mean_der2_noisy
