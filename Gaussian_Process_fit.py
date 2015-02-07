@@ -17,7 +17,7 @@ x_prediction=np.linspace(10.6,12.1,101)   # test set
 print "Define correlation length, hight and error of training set"
 Theta  = 0.0004
 Lambda = 0.05
-Sigma  = 0.0008   	# standard deviation, not variance !!!
+Sigma  = 0.00008   	# standard deviation, not variance !!!
 ################################################################################################################
 ################################################################################################################
 
