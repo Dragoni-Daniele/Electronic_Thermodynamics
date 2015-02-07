@@ -150,4 +150,4 @@ def  GP_fit(x_prediction,x_training,t_training,Theta,Lambda,Sigma):
          return posterior_mean[0],posterior_mean_der1[0],posterior_mean_der2[0], posterior_mean_noisy[0],posterior_mean_der1_noisy[0],posterior_mean_der2_noisy[0]
    else:
          return posterior_mean,posterior_mean_der1,posterior_mean_der2, posterior_mean_noisy,posterior_mean_der1_noisy,posterior_mean_der2_noisy
-      print 'Execution time: ',(datetime.now()-startTime)
+   print 'Execution time: ',(datetime.now()-startTime)
