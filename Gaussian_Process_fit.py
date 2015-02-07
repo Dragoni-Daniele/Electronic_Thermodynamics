@@ -124,8 +124,8 @@ def  GP_fit(x_prediction,x_training,t_training,Theta,Lambda,Sigma):
    posterior_covariance_der2_noisy= Kov_predict_predict_DER22-np.dot(Kov_predict_train_DER20,np.dot(Inverted_Kov_train_train_noisy,-1 * Kov_predict_train_DER20.T))
    # ERRORS on predictions
    check_negative=np.where(np.diag(posterior_covariance)<0.)
-   #if check_negative[0] is not None:
-     #warnings.warn("Negative variance elements ... std ?!!!")
+   if check_negative[0] is not None:
+     warnings.warn("Negative variance elements ... std ?!!!")
      #sys.exit("Negative variance elements -- std not possibile")
    devstd            =np.sqrt(np.diag(posterior_covariance))
    devstd_noisy      =np.sqrt(np.diag(posterior_covariance_noisy))
