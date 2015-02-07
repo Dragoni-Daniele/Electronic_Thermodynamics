@@ -147,5 +147,6 @@ def  GP_fit(x_prediction,x_training,t_training,Theta,Lambda,Sigma):
    posterior_mean_der2_noisy = posterior_mean_der2_noisy+poly_func_der2(x_prediction)
    
 
-   return posterior_mean,posterior_mean_der1,posterior_mean_der2, posterior_mean_noisy,posterior_mean_der1_noisy,posterior_mean_der2_noisy
+   return posterior_mean,posterior_mean_der1
+   #,posterior_mean_der2, posterior_mean_noisy,posterior_mean_der1_noisy,posterior_mean_der2_noisy
    print 'Execution time: ',(datetime.now()-startTime)
