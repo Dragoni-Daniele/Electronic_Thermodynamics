@@ -91,6 +91,7 @@ def  GP_fit(x_prediction,x_training,t_training,Theta,Lambda,Sigma):
        #Kov_train_predict[line,column]        = Kov_predict_train[column,line]                 #trasposta
        Kov_predict_train_DER10[line,column]  = covariance_DER10(lvalue,cvalue,Theta,Lambda)   #derivata1 su prediction
        Kov_predict_train_DER20[line,column]  = covariance_DER20(lvalue,cvalue,Theta,Lambda)   #derivata2 su prediction
+   Kov_train_predict=Kov_predict_train.T
    ################################################################################################################
    ################################################################################################################
    ############ CALCULATE #########################################################################################
