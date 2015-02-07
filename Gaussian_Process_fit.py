@@ -60,9 +60,7 @@ def  GP_fit(x_prediction,x_training,t_training,Theta,Lambda,Sigma):
    ################################################################################################################
    ################################################################################################################
    
-   Nsx=0
-   Ndx=-1
-   degpoly=2
+   degpoly=2            # QUadratic fit to start with
    pol=np.polyfit(x_training,t_training,degpoly)
    polder1=np.polyder(pol,1) 
    polder2=np.polyder(pol,2) 
