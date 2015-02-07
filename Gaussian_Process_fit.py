@@ -59,6 +59,15 @@ def  GP_fit(x_prediction,x_training,t_training,Theta,Lambda,Sigma):
      return amplitude**2 * (12*length_scale**4 -12*length_scale**2 *(x-y)**2 + (x-y)**4)/(16*length_scale**8) * np.exp(-(x-y)**2/(4*length_scale**2))
    ################################################################################################################
    ################################################################################################################
+   
+   Nsx=0
+   Ndx=-1
+   degpoly=2
+   pol=np.polyfit(x_training,t_training,degpoly)
+   polder1=np.polyder(pol,1) 
+   polder2=np.polyder(pol,2) 
+   poly_func=np.poly1d(pol)
+   t_training=t_training-poly_func(x_training)
    ############ LOAD COVARIANCE MATRICES ##########################################################################
    ################################################################################################################
    Kov_train_train           =np.zeros((x_training.size,x_training.size))
