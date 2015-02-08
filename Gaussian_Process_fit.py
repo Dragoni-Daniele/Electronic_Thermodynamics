@@ -16,8 +16,8 @@ t_training=data[:,3]
 x_prediction=np.linspace(10.6,12.1,101)   # test set
 
 print "Define correlation length, hight and error of training set"
-Theta  = 0.006 #0.0002		# Amplitude of oscillations
-Lambda = 0.01  #0.08		# Correlation length
+Theta  = 0.0002		# Amplitude of oscillations
+Lambda = 0.08		# Correlation length
 Sigma  = 0.00008   	# standard deviation, not variance !!!
 ################################################################################################################
 ################################################################################################################
