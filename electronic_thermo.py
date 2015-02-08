@@ -71,9 +71,9 @@ def birchm_1der(V,E0,V0,B0,B01):
 #-----------------------\ LOAD FILES & CHECK /-----------------------
 #--------------------------------------------------------------------
 
-fnames  = sorted(glob('./Fe.dos.Cub-*.dat'))
-Lattices= np.genfromtxt('Lattices.dat')
-Fermi_en= np.genfromtxt('Fermi_energies.dat')
+fnames  = sorted(glob('/home/dragoni/deneb.rsync/data/dragoni/DOS_BCC_Fe/Fe.dos.Cub-*.dat'))
+Lattices= np.genfromtxt('/home/dragoni/deneb.rsync/data/dragoni/DOS_BCC_Fe/Lattices.dat')
+Fermi_en= np.genfromtxt('/home/dragoni/deneb.rsync/data/dragoni/DOS_BCC_Fe/Fermi_energies.dat')
 
 if Lattices.size==Fermi_en.size and Lattices.size==len(fnames):
     pass
@@ -197,7 +197,7 @@ else:
 
 #------------------\ MAIN BODY - thermodynamics /--------------------
 #--------------------------------------------------------------------
-Temperatures_array	= np.linspace(0,1000,601)
+Temperatures_array	= np.linspace(0,1000,61)
 Energy_V_T   		= np.zeros((Volumes_array.size,Temperatures_array.size))
 Entropy_V_T   		= np.zeros((Volumes_array.size,Temperatures_array.size))
 Nelectrons_V_T		= np.zeros((Volumes_array.size,Temperatures_array.size))
@@ -322,6 +322,9 @@ plt.close()
 print 'Always CHECK sorting of data loaded !!!!'
 fnames_vib  = sorted(glob('/home/dragoni/bellatrix.rsync/data/dragoni/elastic-DAN-FM/iso/REdo/curve_freeenergy_at_t_*.dat'))
 
+Theta = 0.0002		# GP hyperparameter - Amplitude oscillations
+Lambda  = 0.08		# GP hyperparameter - Correlation length
+Sigma  = 0.00008	# GP hyperparameter - Error on training data
 F_vib_T     = []
 V_vib_T     = []
 coeff_BM_T  = []
@@ -329,8 +332,10 @@ cov_BM_T    = []
 DeltaF_interpolated = []
 opt_V_vib = []
 opt_V_sum = []
-Bulk_isoth_sum =[]
-Bulk_isoth_vib =[]
+opt_V_sum_GP      = []
+opt_V_vib_GP      = []
+Bulk_isoth_sum    = []
+Bulk_isoth_vib    = []
 for T_index,filee in enumerate(fnames_vib[::10]): 			# the number of temperatures considered must be the same 
   ##
   F_vib_T.append((np.genfromtxt(filee))[:,1])				# Units Ry
@@ -343,11 +348,18 @@ for T_index,filee in enumerate(fnames_vib[::10]): 			# the number of temperature
   coeff_sum,cov_sum = scipy.optimize.curve_fit(birchm,xdata=V_vib_T[T_index],ydata=(F_vib_T[T_index]+DeltaF_interpolated[T_index]),p0=[-254,11.,0.1,4.])
   coeff_BM_T.append(coeff_sum)
   cov_BM_T.append(cov_sum)
-  opt_V_vib.append(scipy.optimize.fmin(birchm, 11., args=(coeff_vib[0],coeff_vib[1],coeff_vib[2],coeff_vib[3]),xtol=1e-9,ftol=1e-7,maxiter=2000,disp=0)[0])
+  opt_V_vib.append(scipy.optimize.fmin(birchm, 11., args=(),xtol=1e-9,ftol=1e-7,maxiter=2000,disp=0)[0])
   opt_V_sum.append(scipy.optimize.fmin(birchm, 11., args=(coeff_sum[0],coeff_sum[1],coeff_sum[2],coeff_sum[3]),xtol=1e-9,ftol=1e-7,maxiter=2000,disp=0)[0])
-  #opt_V_sum_GP.append(scipy.optimize.fmin(GP_fit_func_noisy,x0=11.5,args=(x_training,t_training,Theta,Lambda,Sigma),xtol=1e-9,ftol=1e-7,maxiter=2000,full_output=True,disp=0)[0] )
+  opt_V_vib_GP.append(scipy.optimize.fmin(GP_fit_func_noisy,x0=11.5,args=(V_vib_T[T_index],F_vib_T[T_index],Theta,Lambda,Sigma),xtol=1e-9,ftol=1e-7,maxiter=100,full_output=True,disp=0)[0][0] )
+  opt_V_sum_GP.append(scipy.optimize.fmin(GP_fit_func_noisy,x0=11.5,args=(V_vib_T[T_index],(F_vib_T[T_index]+DeltaF_interpolated[T_index]),Theta,Lambda,Sigma),xtol=1e-9,ftol=1e-7,maxiter=100,full_output=True,disp=0)[0][0] )
   Bulk_isoth_sum.append(coeff_sum[2])					# Units Ry/AA^3
   Bulk_isoth_vib.append(coeff_vib[2])					# Units Ry/AA^3
+
+Bulk_isoth_vib_GP=[]
+Bulk_isoth_sum_GP=[]
+for T_index,filee in enumerate(fnames_vib[::10]): 
+ Bulk_isoth_vib_GP.append(GP_fit_der2_noisy(np.array([opt_V_sum_GP[T_index],opt_V_sum_GP[T_index]+0.1]),V_vib_T[T_index], F_vib_T[T_index],Theta,Lambda,Sigma)[0])
+ Bulk_isoth_sum_GP.append(GP_fit_der2_noisy(np.array([opt_V_sum_GP[T_index],opt_V_sum_GP[T_index]+0.1]),V_vib_T[T_index],(F_vib_T[T_index]+DeltaF_interpolated[T_index]),Theta,Lambda,Sigma)[0])
 
 
 if os.path.isfile('/home/dragoni/bellatrix.rsync/data/dragoni/elastic-DAN-FM/iso/REdo/v_vs_t-5.290_5.301_5.312_5.323_5.333_5.344_5.355_5.365_5.376_5.387_5.398_5.408_5.419_5.440_5.46.dat') is True:

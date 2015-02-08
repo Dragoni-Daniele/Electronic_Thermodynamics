@@ -38,8 +38,8 @@ def  GP_fit(x_prediction,x_training,t_training,Theta,Lambda,Sigma):
    from tabulate import tabulate
    
    startTime=datetime.now()
-   print "Use eV, AA for energy and distance !!"
-   print
+   #print "Use eV, AA for energy and distance !!"
+   #print
    ############ DEFINE SUB-FUNCTIONS ##############################################################################
    ################################################################################################################
    def covariance_DER00(x,y,amplitude,length_scale):      # Covariance function-function
@@ -189,7 +189,7 @@ def  GP_fit_der2_noisy(x_prediction,x_training,t_training,Theta,Lambda,Sigma):
 ######## CHECK CONVERGENCE HYPERPARAMETERS WHEN POSSIBLE #######################################################
 ################################################################################################################
 
-def check_hyperparams_convergence(x_training,t_training,Theta,Lambda,Sigma)
+def check_hyperparams_convergence(x_training,t_training,Theta,Lambda,Sigma):
 
   def covariance_DER00(x,y,amplitude,length_scale):      # Covariance function-function
     return amplitude**2*np.exp(-(x-y)**2/(4*length_scale**2))
@@ -219,8 +219,8 @@ def check_hyperparams_convergence(x_training,t_training,Theta,Lambda,Sigma)
   Parameters_f_matrix=np.array(Parameters_function).reshape(len(Theta_values),len(Lambda_values))
   Parameters_f_matrix[Parameters_f_matrix==inf]=-8e8
 
-  from pylab import *
-   from mpl_toolkits.mplot3d.axes3d import Axes3D
+  #from pylab import *
+  from mpl_toolkits.mplot3d.axes3d import Axes3D
   X,Y=np.meshgrid(Lambda_values,Theta_values)
   fig,ax=plt.subplots()
   p=ax.pcolor(X,Y,Parameters_f_matrix,cmap=cm.coolwarm)
