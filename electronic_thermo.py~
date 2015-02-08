@@ -345,7 +345,7 @@ for T_index,filee in enumerate(fnames_vib[::10]): 			# the number of temperature
   cov_BM_T.append(cov_sum)
   opt_V_vib.append(scipy.optimize.fmin(birchm, 11., args=(coeff_vib[0],coeff_vib[1],coeff_vib[2],coeff_vib[3]),xtol=1e-9,ftol=1e-7,maxiter=2000,disp=0)[0])
   opt_V_sum.append(scipy.optimize.fmin(birchm, 11., args=(coeff_sum[0],coeff_sum[1],coeff_sum[2],coeff_sum[3]),xtol=1e-9,ftol=1e-7,maxiter=2000,disp=0)[0])
-  #opt_V_sum_GP.append(scipy.optimize.fmin(GP_fit_func_noisy,x0=11.5,args=(x_training,t_training,Theta,Lambda,Sigma),xtol=1e-9,ftol=1e-7,maxiter=2000,full_output=True,disp=0)[0] )
+  #opt_V_sum_GP.append(scipy.optimize.fmin(GP_fit_func_noisy,x0=11.5,args=(x_training,t_training,Theta,Lambda,Sigma),xtol=1e-9,ftol=1e-7,maxiter=2000,full_output=True,disp=0) )
   Bulk_isoth_sum.append(coeff_sum[2])					# Units Ry/AA^3
   Bulk_isoth_vib.append(coeff_vib[2])					# Units Ry/AA^3
 
